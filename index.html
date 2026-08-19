@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyber Resilience Act &amp; EN 40000 — Practitioner Training | Synapsec</title>
+<meta name="description" content="A practitioner half-day on Regulation (EU) 2024/2847 and the EN 40000 series. Scope triage, Annex I requirements, vulnerability handling and Article 14 reporting, conformity assessment routes.">
+<meta property="og:title" content="Cyber Resilience Act &amp; EN 40000 — Practitioner Training">
+<meta property="og:site_name" content="Synapsec">
+<meta name="author" content="Synapsec">
+<meta property="og:description" content="Half a day to know what the CRA requires of your product, what evidence proves it, and which conformity route applies.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --ink:#101418; --body:#39434f; --muted:#6b7684; --line:#e2e7ee;
+    --accent:#1f5fa8; --accent-dark:#16487f;
+    --bg:#ffffff; --panel:#f6f8fb; --panel2:#eef3f9; --warn:#8a4b16;
+    --ok:#1d6b4f; --radius:10px;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ink:#f2f5f8; --body:#c2cbd6; --muted:#8b95a3; --line:#26303c;
+      --accent:#6aa6e8; --accent-dark:#8cbdf0;
+      --bg:#0e1319; --panel:#151c25; --panel2:#1b2430; --warn:#d8a06a; --ok:#6bc79f;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--body);
+    font:400 17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{color:var(--ink);line-height:1.25;margin:0 0 .5em}
+  h1{font-size:clamp(30px,5.2vw,46px);font-weight:680;letter-spacing:-.02em}
+  h2{font-size:clamp(23px,3.4vw,30px);font-weight:650;letter-spacing:-.01em;margin-top:0}
+  h3{font-size:19px;font-weight:640}
+  p{margin:0 0 1.05em}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  section:first-of-type{border-top:none}
+
+  /* header */
+  header{padding:20px 0;border-bottom:1px solid var(--line);position:sticky;top:0;
+         background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);z-index:20}
+  .navrow{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{font-weight:650;color:var(--ink);font-size:15px;letter-spacing:-.01em}
+  .brand span{color:var(--muted);font-weight:400}
+  nav a{color:var(--muted);font-size:14px;margin-left:20px}
+  nav a:hover{color:var(--ink);text-decoration:none}
+  @media(max-width:640px){nav{display:none}}
+
+  /* hero */
+  .hero{padding:72px 0 56px}
+  .eyebrow{font:600 12.5px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;
+           color:var(--accent);margin-bottom:18px}
+  .lead{font-size:clamp(18px,2.3vw,20px);color:var(--body);max-width:62ch}
+  .format{font-size:16px;color:var(--muted);max-width:62ch;margin-top:18px;
+          padding-left:14px;border-left:2px solid var(--line)}
+  .format b{color:var(--ink);font-weight:640}
+  .clock{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 28px}
+  .chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;
+        padding:8px 15px;font:500 14px/1 inherit;color:var(--body)}
+  .chip b{color:var(--ink);font-variant-numeric:tabular-nums}
+  .chip.hot{border-color:color-mix(in srgb,var(--warn) 45%,var(--line));
+            background:color-mix(in srgb,var(--warn) 8%,var(--panel))}
+
+  .cta{display:inline-block;background:var(--accent);color:#fff;font-weight:600;
+       padding:14px 26px;border-radius:var(--radius);font-size:16px;border:1px solid var(--accent)}
+  .cta:hover{background:var(--accent-dark);border-color:var(--accent-dark);text-decoration:none;color:#fff}
+  .cta.ghost{background:transparent;color:var(--accent);border-color:var(--line)}
+  .cta.ghost:hover{background:var(--panel);color:var(--accent)}
+  .ctarow{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .undercta{font-size:14px;color:var(--muted);margin-top:14px}
+
+  /* generic blocks */
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+  .card{border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:var(--panel)}
+  .card h3{margin-bottom:.35em}
+  .card p{margin:0;font-size:15.5px;color:var(--body)}
+  .num{font:600 12px/1 var(--mono);color:var(--accent);letter-spacing:.06em;margin-bottom:10px}
+
+  /* modules */
+  .mod{display:grid;grid-template-columns:78px 1fr;gap:20px;padding:20px 0;border-top:1px solid var(--line)}
+  .mod:first-of-type{border-top:none}
+  .mod .id{font:600 13px/1.5 var(--mono);color:var(--accent)}
+  .mod .id small{display:block;color:var(--muted);font-weight:400;margin-top:4px}
+  .mod h3{margin-bottom:.3em}
+  .mod p{margin:0;font-size:15.5px}
+  @media(max-width:560px){.mod{grid-template-columns:1fr;gap:6px}}
+
+  /* pricing */
+  .tiers{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:8px}
+  .tier{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:var(--bg);
+        display:flex;flex-direction:column}
+  .tier.now{border-color:var(--accent);border-width:2px;background:var(--panel);position:relative}
+  .badge{position:absolute;top:-11px;left:22px;background:var(--accent);color:#fff;
+         font:600 11px/1 var(--mono);letter-spacing:.07em;padding:6px 10px;border-radius:5px;text-transform:uppercase}
+  .tier .when{font:600 11.5px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .price{font-size:34px;font-weight:680;color:var(--ink);letter-spacing:-.02em;margin-bottom:4px}
+  .price small{font-size:14px;font-weight:400;color:var(--muted);letter-spacing:0}
+  .tier ul{list-style:none;padding:0;margin:16px 0 20px;font-size:15px}
+  .tier li{padding:6px 0 6px 22px;position:relative;color:var(--body)}
+  .tier li::before{content:"";position:absolute;left:0;top:13px;width:11px;height:2px;background:var(--accent);border-radius:2px}
+  .tier li.plus::before{content:"+";background:none;top:5px;left:1px;color:var(--accent);font-weight:700;height:auto;width:auto}
+  .tier .foot{margin-top:auto}
+
+
+  /* notes */
+  .note{border-left:3px solid var(--accent);background:var(--panel);padding:16px 20px;
+        border-radius:0 var(--radius) var(--radius) 0;font-size:15.5px;margin:24px 0}
+  .note.warn{border-left-color:var(--warn)}
+  .note p:last-child{margin-bottom:0}
+
+  /* faq */
+  details{border-bottom:1px solid var(--line);padding:16px 0}
+  summary{cursor:pointer;font-weight:600;color:var(--ink);font-size:16.5px;list-style:none;
+          display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--accent);font-weight:700;flex:none}
+  details[open] summary::after{content:"–"}
+  details p{margin:12px 0 0;font-size:15.5px}
+
+  table{width:100%;border-collapse:collapse;font-size:15px;margin:8px 0 0}
+  th{text-align:left;font-weight:640;color:var(--ink);border-bottom:2px solid var(--line);padding:10px 12px 10px 0}
+  td{border-bottom:1px solid var(--line);padding:10px 12px 10px 0;vertical-align:top}
+  td:last-child,th:last-child{padding-right:0}
+
+  footer{padding:44px 0 60px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+  footer a{color:var(--muted);text-decoration:underline}
+  .disclaimer{font-size:13.5px;color:var(--muted);line-height:1.6;margin-top:20px;max-width:70ch}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap navrow">
+    <div class="brand">SYNAPSEC <span>· CRA &amp; EN 40000 Training</span></div>
+    <nav>
+      <a href="#course">Course</a>
+      <a href="#audience">Who it's for</a>
+      <a href="#pricing">Price</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ───────────── HERO ───────────── -->
+  <section class="hero">
+    <div class="eyebrow">Regulation (EU) 2024/2847 · prEN 40000 series</div>
+    <h1>Half a day to understand what the CRA actually requires of your product.</h1>
+    <p class="lead">
+      Not a summary of the Regulation. A working walkthrough: how to tell whether your product is
+      in scope, which of the thirteen essential requirements apply to it, what evidence proves
+      each one, and which conformity assessment route you are allowed to use.
+    </p>
+
+    <p class="format">
+      <b>Self-paced.</b> Six modules, 2 hours 5 minutes. Slide decks, narration
+      scripts and checklists all download as files &mdash; there is no platform, no login,
+      and nothing to lose access to.
+    </p>
+
+    <div class="clock">
+      <div class="chip hot">Article&nbsp;14 reporting duties live in <b id="d-report">—</b> days</div>
+      <div class="chip">Full application in <b id="d-full">—</b> days</div>
+      <div class="chip">11 December 2027</div>
+    </div>
+
+    <div class="ctarow">
+      <a class="cta" href="#pricing">Get the course — €129</a>
+      <a class="cta ghost" href="#course">See what's covered</a>
+    </div>
+    <p class="undercta">Launch price until 11 September 2026 — the day reporting obligations start.</p>
+  </section>
+
+  <!-- ───────────── WHY NOW ───────────── -->
+  <section id="why">
+    <h2>Two dates, and most teams have only noticed one</h2>
+    <div class="grid g2">
+      <div class="card">
+        <div class="num">11 SEP 2026</div>
+        <h3>Reporting obligations apply</h3>
+        <p>Article 14 binds <strong>every in-scope product regardless of when it was placed on the market</strong>.
+        Actively exploited vulnerability or severe incident: 24 hours to early warning, 72 hours to
+        notification, then a final report. There is no grandfathering here — this is the carve-back
+        most teams miss.</p>
+      </div>
+      <div class="card">
+        <div class="num">11 DEC 2027</div>
+        <h3>Full application</h3>
+        <p>Annex I essential requirements, Article 13 manufacturer duties, technical documentation,
+        conformity assessment, CE marking. Products already on the market are pulled back in the
+        moment they undergo a substantial modification — including, in practice, some firmware
+        updates.</p>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>Penalties are set against turnover, not against the product.</strong> Non-compliance
+      with the essential requirements or Articles 13–14 carries a maximum administrative fine of the
+      higher of €15,000,000 or 2.5% of total worldwide annual turnover.</p>
+    </div>
+  </section>
+
+  <!-- ───────────── COURSE ───────────── -->
+  <section id="course">
+    <h2>What's covered</h2>
+    <p>Six modules, <strong>2 hours 5 minutes</strong> of narrated content, built to be taken in one
+    sitting or spread across a week. Every slide carries the article, annex or clause it rests on.</p>
+
+    <div class="mod">
+      <div class="id">M01<small>25:08</small></div>
+      <div>
+        <h3>The CRA in scope — what it covers, who it binds, when it bites</h3>
+        <p>The connectivity test and why teams under-scope it. Exclusions and where the spare-parts
+        and dual-use exemptions are over-claimed. Product with digital elements, support period,
+        substantial modification. The four criticality tiers and the conformity route each one
+        forces. Placing on the market versus making available. Timeline, transitional provisions,
+        penalties.</p>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="id">M02<small>31:05</small></div>
+      <div>
+        <h3>Security by design — Annex I Part I in practice</h3>
+        <p>All thirteen essential requirements, (a) through (m), each with the control that
+        implements it, the method that verifies it and the evidence an assessor expects. The
+        Article 13 risk assessment that decides which of them apply — and why a templated one is a
+        recurring audit finding. Where prEN 40000-1-2 maps onto each requirement, and why that
+        mapping is currently informative only.</p>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="id">M03<small>29:03</small></div>
+      <div>
+        <h3>Vulnerability handling and reporting — Annex I Part II and Article 14</h3>
+        <p>The eight Part II duties against the six phases of prEN 40000-1-3. SBOM in practice:
+        format, minimum content, why top-level-only understates your exposure, and the version-drift
+        problem nobody solves cleanly. Coordinated disclosure. The 24-hour, 72-hour and final-report
+        regime, who receives each one, and what goes in it.</p>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="id">M04<small>26:48</small></div>
+      <div>
+        <h3>Proving it — roles, standards and conformity assessment</h3>
+        <p>Manufacturer, importer, distributor, open-source steward — and the two ways a distributor
+        silently becomes a manufacturer. How presumption of conformity actually works, and the
+        difference between prEN 40000-1-3's formal Annex ZA status and prEN 40000-1-2's informative
+        one. Modules A, B+C, H and the certification route, with a decision rule for choosing between
+        them. The four findings market surveillance authorities actually raise.</p>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="id">M00<br>M05<small>05:36<br>06:54</small></div>
+      <div>
+        <h3>Orientation and roadmap</h3>
+        <p>How to use the course, what the draft status of the standards means for anything you
+        build on it, a dated action roadmap, a one-page readiness checklist, and the full source
+        register.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── AUDIENCE ───────────── -->
+  <section id="audience">
+    <h2>Who it's for</h2>
+    <p>The material is layered. Engineering depth and compliance depth are tagged separately, so a
+    mixed team can take the same course without half the room switching off.</p>
+    <div class="grid g3">
+      <div class="card">
+        <h3>Product &amp; software engineers</h3>
+        <p>You need to know which requirements land on your backlog, what "no known exploitable
+        vulnerabilities" means as a release gate, and what evidence you have to produce.</p>
+      </div>
+      <div class="card">
+        <h3>Compliance, QM, regulatory</h3>
+        <p>You need the conformity routes, the technical documentation set, what a notified body
+        examines, and where presumption of conformity does and does not apply.</p>
+      </div>
+      <div class="card">
+        <h3>Product management</h3>
+        <p>You need scope and classification, support-period commitments, the timeline, and what a
+        substantial modification costs you.</p>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>Not for you if</strong> you want a legal opinion on a specific product, or a
+      certification. This is training. It gets you to the point where you can run a first-pass gap
+      analysis and ask your assessor sharper questions.</p>
+    </div>
+  </section>
+
+  <!-- ───────────── PRICING ───────────── -->
+  <section id="pricing">
+    <h2>Price</h2>
+    <p>One course, one price. Everything downloads; there is no platform, no subscription, no
+    seats to manage and nothing that expires.</p>
+
+    <div class="tiers" style="grid-template-columns:1fr;max-width:520px">
+      <div class="tier now">
+        <div class="badge">Available now</div>
+        <div class="when">Individual licence</div>
+        <div class="price">€129 <span style="font-size:20px;color:var(--muted);font-weight:400;text-decoration:line-through">€179</span></div>
+        <div class="price"><small>launch price until 11 September 2026</small></div>
+        <ul>
+          <li>Six modules · 2 h 05 m of narrated content</li>
+          <li>104 slides as PDF, print-ready</li>
+          <li>Full narration scripts and speaker notes</li>
+          <li>Readiness checklist and dated action roadmap</li>
+          <li>Knowledge checks per module and a final assessment</li>
+          <li>Source register — every designation, stage and check date</li>
+          <li>Certificate of completion</li>
+        </ul>
+        <div class="foot">
+          <a class="cta" href="https://synapsec.gumroad.com/l/eu_cra_en40000_founder_edition?wanted=true" id="buy" target="_blank" rel="noopener" style="display:block;text-align:center">Get the course — €129</a>
+          <p class="undercta" style="text-align:center">Instant download · 14-day refund, no questions</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note warn">
+      <p><strong>On the standards being drafts.</strong> The EN 40000 series is referenced here at
+      prEN stage. Every edition records the exact designation and stage it was verified against,
+      with a date, so you always know what you are relying on. When a part is cited in the Official
+      Journal its status changes — when I update the course for that, buyers get the update. I am
+      not putting a date on it, because I would rather under-promise than miss one.</p>
+    </div>
+  </section>
+
+  <!-- ───────────── HOW IT'S BUILT ───────────── -->
+  <section id="method">
+    <h2>How this was built</h2>
+    <p>Compliance training is only worth anything if you can check it. So every claim in this course
+    is traceable to the instrument it comes from, and that traceability is mechanical rather than
+    promised.</p>
+    <table>
+      <tr><th>Every slide</th><td>declares the articles, annexes or clauses it draws on</td></tr>
+      <tr><th>Every reference</th><td>is verified to resolve against the source register before the deck ships</td></tr>
+      <tr><th>Every quantity</th><td>— deadlines, thresholds, periods, fines — is reproduced verbatim, never rounded or paraphrased</td></tr>
+      <tr><th>Every standard</th><td>is named with its designation and draft stage, so you always know what you are relying on</td></tr>
+      <tr><th>Gaps</th><td>are marked as gaps, not filled with plausible text</td></tr>
+    </table>
+  </section>
+
+  <!-- ───────────── FAQ ───────────── -->
+  <section id="faq">
+    <h2>Questions</h2>
+
+    <details>
+      <summary>Does this make my product compliant?</summary>
+      <p>No, and be careful with anyone who says otherwise. Compliance is a property of your product,
+      your documentation and your processes. This course gets you to the point where you can assess
+      your own position accurately, run a first-pass gap analysis, and brief the right people
+      internally.</p>
+    </details>
+
+    <details>
+      <summary>Is the certificate accredited?</summary>
+      <p>No. It is a certificate of completion issued by me, and it is worth exactly what that
+      implies. It is included because people like to have one, not because it carries regulatory
+      weight. If you need an accredited qualification, this is not it.</p>
+    </details>
+
+    <details>
+      <summary>The EN 40000 parts are still drafts. Doesn't that make the course obsolete quickly?</summary>
+      <p>It makes the standards portion time-bound, which is why every edition is dated and states
+      the stage it was verified against. The Regulation itself is in force and stable. The material
+      most likely to move is the presumption-of-conformity status of prEN 40000-1-3 — which is
+      flagged explicitly in the course rather than glossed over. When I update the course for a change in status, buyers get that update.</p>
+    </details>
+
+    <details>
+      <summary>Do I need a technical background?</summary>
+      <p>No. Engineering-depth and compliance-depth passages are tagged so you can go deeper where
+      it's your job and skim where it isn't. No prior knowledge of the CRA or of CEN/CENELEC work is
+      assumed.</p>
+    </details>
+
+    <details>
+      <summary>What format do I get?</summary>
+      <p>104 slides as a print-ready PDF, the full narration scripts, checklists as separate files,
+      and the assessment. Everything downloads and is yours to keep — there is no platform to lose
+      access to, and nothing expires.</p>
+    </details>
+
+    <details>
+      <summary>Can I use this to train my team?</summary>
+      <p>The licence is for one person. If you want to run it for a group internally, email me and
+      we&rsquo;ll sort something out — but there is no seat-management system here and I am not
+      pretending otherwise.</p>
+    </details>
+
+    <details>
+      <summary>Is this a cohort? Are there live sessions?</summary>
+      <p>No. It is entirely self-paced and there is no group, no schedule and no calls. You download
+      the material and work through it whenever suits you.</p>
+    </details>
+
+    <details>
+      <summary>Will there be more material later?</summary>
+      <p>Probably — checklists, workbooks and templates are the obvious next things. I am not
+      announcing dates for them, because I would rather ship late and quiet than miss a date I
+      published. If you have bought the course you will hear about anything new before anyone else.</p>
+    </details>
+
+    <details>
+      <summary>Refunds?</summary>
+      <p>Fourteen days, no questions. If it isn't what you needed, say so and you get your money back.</p>
+    </details>
+  </section>
+
+  <!-- ───────────── FINAL CTA ───────────── -->
+  <section id="join">
+    <h2>Get the course</h2>
+    <p class="lead">€129 until 11 September 2026 — the day Article 14 reporting obligations start. Self-paced, fully downloadable, yours to keep. Reporting duties begin in <b id="d-report2">—</b> days.</p>
+    <div class="ctarow" style="margin-top:24px">
+      <a class="cta" href="https://synapsec.gumroad.com/l/eu_cra_en40000_founder_edition?wanted=true" id="buy2" target="_blank" rel="noopener">Get the course — €129</a>
+      <a class="cta ghost" href="mailto:synapsec@outlook.de?subject=CRA%20course%20question">Ask a question first</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Synapsec</strong> — Cyber Resilience Act &amp; EN 40000 Practitioner Training<br>
+    <a href="#course">Course</a> · <a href="#pricing">Price</a> · <a href="#faq">FAQ</a> ·
+    <a href="mailto:synapsec@outlook.de">Contact</a> ·
+    <a href="https://synapsec.gumroad.com/l/eu_cra_en40000_founder_edition" target="_blank" rel="noopener">View on Gumroad</a></p>
+
+    <p class="disclaimer">
+      This training is for educational purposes and does not constitute legal advice.
+      Regulation (EU) 2024/2847 is binding law; the EN 40000 series is referenced at draft stage
+      (prEN) and its content, clause numbering and presumption-of-conformity status may change
+      before publication in the Official Journal of the European Union. Verify the current status
+      of any standard before relying on it for a conformity claim. This course is not accredited
+      and confers no certification, and it is not affiliated with, endorsed by, or produced in
+      cooperation with the European Commission, CEN, CENELEC, ETSI, ENISA, or any notified body or
+      conformity assessment body.
+    </p>
+
+    <p class="disclaimer">© 2026 Synapsec — All rights reserved. Standards designations are the property
+    of their respective publishers.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var day = 864e5;
+  function daysTo(iso) {
+    var now = new Date();
+    var t = new Date(iso + "T00:00:00Z");
+    return Math.max(0, Math.ceil((t - now) / day));
+  }
+  function put(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
+
+  var report = daysTo("2026-09-11");
+  var full   = daysTo("2027-12-11");
+  put("d-report", report.toLocaleString());
+  put("d-report2", report.toLocaleString());
+  put("d-full", full.toLocaleString());
+
+  // If the reporting date has passed, restate the chip rather than showing zero.
+  if (report === 0) {
+    var chip = document.querySelector(".chip.hot");
+    if (chip) chip.innerHTML = "Article&nbsp;14 reporting duties are <b>already in force</b>";
+  }
+
+  // Checkout opens Gumroad directly. ?wanted=true skips the product page.
+  var CHECKOUT_URL = "https://synapsec.gumroad.com/l/eu_cra_en40000_founder_edition?wanted=true";
+  ["buy", "buy2"].forEach(function (id) {
+    var a = document.getElementById(id);
+    if (a) { a.href = CHECKOUT_URL; a.target = "_blank"; a.rel = "noopener"; }
+  });
+})();
+</script>
+</body>
+</html>
